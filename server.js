@@ -23,7 +23,23 @@ app.get("/", function (req, res) {
 app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
+// Endpont for timestamp
+app.get("/api/timestamp/", (req, res) => {
+  
+  let currentTimeStamp = new Date();
+  res.json({"unix":currentTimeStamp.getTime(), "utc":currentTimeStamp.toUTCString()})  
+})
 
+app.get("/api/timestamp/:date_string", (req, res) => {
+   let date;
+   if(isNaN(Number(req.params.date_string))){
+      date = new Date(req.params.date_string)
+      res.json({"unix":date.getTime(), "utc":date.toUTCString()})
+   }else{
+     date = new Date(Number(req.params.date_string));
+     res.json({"unix":date.getTime(), "utc":date.toUTCString()})
+   }
+})
 
 
 // listen for requests :)
